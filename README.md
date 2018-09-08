@@ -1,7 +1,7 @@
 openbsd-rubywarden
 =========
 
-Role to setup a [rubywarden](https://github.com/jcs/rubywarden] instance on OpenBSD.
+Role to setup a [rubywarden](https://github.com/jcs/rubywarden) instance on OpenBSD.
 
 Requirements
 ------------

@@ -1,0 +1,28 @@
+---
+
+- name: Install dependencies
+  package:
+    name: "{{ item }}"
+    state: installed
+  loop:
+    - git
+    - ruby24-bundler
+    - sqlite3
+
+- name: add rubywarden group
+  group:
+    name: "{{ rw_group }}"
+    state: present
+
+- name: add rubywarden user
+  user:
+    name: "{{ rw_user }}"
+    state: present
+    group: "{{ rw_group }}"
+    append: yes
+
+- name: get rubywarden code
+  git:
+    repo: "https://github.com/jcs/rubywarden.git"
+    dest: "{{ rw_home }}"
+    version: "{{ rw_commit }}"

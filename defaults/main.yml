@@ -1,0 +1,8 @@
+---
+# defaults file for openbsd-rubywarden
+
+rw_port: 4567
+rw_user: _rubywarden
+rw_group: _rubywarden
+rw_signups: False
+rw_commit: master

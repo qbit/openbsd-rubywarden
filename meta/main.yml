@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: rubywarden
+  author: Aaron Bieber <aaron@bolddaemon.com>
+  description: OpenBSD rubywarden instance
+
+  license: BSD
+
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: OpenBSD
+    versions:
+    - 6.1
+
+  galaxy_tags: ["OpenBSD", "rubywarden", "bitwarden"]
+
+dependencies: []

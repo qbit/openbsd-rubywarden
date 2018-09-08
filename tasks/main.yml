@@ -26,3 +26,11 @@
     repo: "https://github.com/jcs/rubywarden.git"
     dest: "{{ rw_home }}"
     version: "{{ rw_commit }}"
+
+- name: create rubywarden rc script
+  template:
+    src: rubywarden.j2
+    dest: /etc/rc.d/rubywarden
+    owner: root
+    group: wheel
+    mode: 755

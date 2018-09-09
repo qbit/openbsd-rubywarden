@@ -5,7 +5,7 @@
 datadir="{{ rw_home }}"
 
 env="GEM_HOME=${datadir} RACK_ENV=production PATH=$PATH:$GEM_HOME/rb/bin"
-daemon="/usr/local/bin/bundle24 exec rackup -p 4567 config.ru"
+daemon="/usr/local/bin/bundle24 exec rackup -p {{ rw_port }} config.ru"
 daemon_user="{{ rw_user }}"
 
 . /etc/rc.d/rc.subr
@@ -14,7 +14,7 @@ rc_start() {
 	${rcexec} "env ${env} ${daemon}"
 }
 
-pexp="ruby24 {{ rw_home }}/rb/bin/rackup -p 4567 config.ru"
+pexp="ruby24 {{ rw_home }}/rb/bin/rackup -p {{ rw_port }} config.ru"
 
 rc_reload=NO
 rc_bg=YES

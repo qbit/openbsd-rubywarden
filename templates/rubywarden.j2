@@ -2,12 +2,12 @@
 
 # {{ ansible_managed }}
 
-datadir="{{ rw_home }}/rw"
+datadir="{{ rw_src }}"
 
 {% if rw_signups == True %}
-env="GEM_HOME={{ rw_home }} RACK_ENV=production ALLOW_SIGNUPS=1 PATH=$PATH:$GEM_HOME/rb/bin"
+env="RACK_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin"
 {% else %}
-env="GEM_HOME={{ rw_home }} RACK_ENV=production PATH=$PATH:$GEM_HOME/rb/bin"
+env="RACK_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin"
 {% endif %}
 daemon="/usr/local/bin/bundle24 exec rackup -p {{ rw_port }} config.ru"
 daemon_user="{{ rw_user }}"
@@ -15,10 +15,14 @@ daemon_user="{{ rw_user }}"
 . /etc/rc.d/rc.subr
 
 rc_start() {
-	${rcexec} "env ${env} ${daemon}"
+	${rcexec} "cd ~/src && env ${env} ${daemon}"
 }
 
-pexp="ruby24 {{ rw_home }}/rb/bin/rackup -p {{ rw_port }} config.ru"
+rc_stop() {
+	pkill $(pgrep -f "rackup -p {{ rw_port }}")
+}
+
+pexp="ruby24 .*rackup -p {{ rw_port }} config.ru"
 
 rc_reload=NO
 rc_bg=YES

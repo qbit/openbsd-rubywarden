@@ -75,9 +75,6 @@
     state: started
     enabled: True
 
-- name: debug
-  debug: msg="{{ started }}"
-
 - name: restart rubywarden
   when: rc_status.changed and started.changed == False
   service:

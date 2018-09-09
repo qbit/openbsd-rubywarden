@@ -6,3 +6,5 @@ rw_user: _rubywarden
 rw_group: _rubywarden
 rw_signups: False
 rw_commit: master
+rw_env: production
+rw_home: /var/rubywarden

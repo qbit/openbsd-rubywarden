@@ -19,6 +19,7 @@ Role Variables
 | rw_group  | _rubywarden | The group that will be added to the system in order to run rubywarden. |
 | rw_signups | false | Tells rubywarden to allow signups. Requires a service restart to change. |
 | rw_commit | master | Specific commit to be used during the checkout process. |
+| rw_env | production | Specify if we are running in production or development mode. |
 
 Example Playbook
 ----------------

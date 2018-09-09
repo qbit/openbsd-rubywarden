@@ -8,18 +8,25 @@ Requirements
 
 - OpenBSD
 
+TODO
+----
+
+- Stop cloning as `root`.
+- Fix `rc`'s `stop` action.
+
 Role Variables
 --------------
 
 | Variable | Default | Description |
 |--------- | ------- | ----------- |
-| rw_port  | 4567    | The port rubywarden should listen on. |
-| rw_user  | _rubywarden | The user that will be added to the system in order to run rubywarden. |
-| rw_home  | /var/rubywarden | Home directory for rw_user. |
-| rw_group  | _rubywarden | The group that will be added to the system in order to run rubywarden. |
-| rw_signups | false | Tells rubywarden to allow signups. Requires a service restart to change. |
-| rw_commit | master | Specific commit to be used during the checkout process. |
-| rw_env | production | Specify if we are running in production or development mode. |
+| rw_port  | `4567`  | The port rubywarden should listen on. |
+| rw_user  | `_rubywarden` | The user that will be added to the system in order to run rubywarden. |
+| rw_home  | `/var/rubywarden` | Home directory for rw_user. |
+| rw_group  | `_rubywarden` | The group that will be added to the system in order to run rubywarden. |
+| rw_signups | `false` | Tells rubywarden to allow signups. Requires a service restart to change. |
+| rw_commit | `master` | Specific commit to be used during the checkout process. |
+| rw_env | `production` | Specify if we are running in production or development mode. |
+| rw_src | `"{{ rw_home }}/src"` | Dir to clone the rubywarden source to. |
 
 Example Playbook
 ----------------

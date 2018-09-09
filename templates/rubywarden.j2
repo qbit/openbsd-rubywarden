@@ -2,9 +2,13 @@
 
 # {{ ansible_managed }}
 
-datadir="{{ rw_home }}"
+datadir="{{ rw_home }}/rw"
 
-env="GEM_HOME=${datadir} RACK_ENV=production PATH=$PATH:$GEM_HOME/rb/bin"
+{% if rw_signups == True %}
+env="GEM_HOME={{ rw_home }} RACK_ENV=production ALLOW_SIGNUPS=1 PATH=$PATH:$GEM_HOME/rb/bin"
+{% else %}
+env="GEM_HOME={{ rw_home }} RACK_ENV=production PATH=$PATH:$GEM_HOME/rb/bin"
+{% endif %}
 daemon="/usr/local/bin/bundle24 exec rackup -p {{ rw_port }} config.ru"
 daemon_user="{{ rw_user }}"
 

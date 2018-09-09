@@ -25,7 +25,7 @@
 - name: get rubywarden code
   git:
     repo: "https://github.com/jcs/rubywarden.git"
-    dest: "{{ rw_home }}/rw"
+    dest: "{{ rw_src }}"
     version: "{{ rw_commit }}"
 
 - name: run bundler
@@ -33,22 +33,31 @@
     executable: /usr/local/bin/bundle24
     gem_path: "{{ rw_home }}/rb"
     binstub_directory: "{{ rw_home }}/rb/bin"
-    chdir: "{{ rw_home }}/rw"
+    chdir: "{{ rw_src }}"
     state: present
 
-- name: make the production db dir
+- name: make the {{ rw_env }} db dir
   file:
-    path: "{{ rw_home }}/rw/db/production"
+    path: "{{ rw_src }}/db/{{ rw_env }}"
     state: directory
     owner: "{{ rw_user }}"
     group: "{{ rw_group }}"
+    recurse: yes
   register: migrate
 
 - name: run db:migrate
   when: migrate.changed
   command: "env RACK_ENV={{ rw_env }} bundle24 exec rake db:migrate"
   args:
-    chdir: "{{ rw_home }}/rw"
+    chdir: "{{ rw_src }}"
+
+- name: verify perms {{ rw_env }} db dir
+  file:
+    path: "{{ rw_src }}/db/{{ rw_env }}"
+    state: directory
+    owner: "{{ rw_user }}"
+    group: "{{ rw_group }}"
+    recurse: yes
 
 - name: create rubywarden rc script
   register: rc_status
@@ -60,13 +69,17 @@
     mode: 755
 
 - name: enable rubywarden on boot
+  register: started
   service:
     name: rubywarden
     state: started
     enabled: True
 
+- name: debug
+  debug: msg="{{ started }}"
+
 - name: restart rubywarden
-  when: rc_status.changed
+  when: rc_status.changed and started.changed == False
   service:
     name: rubywarden
     state: restarted

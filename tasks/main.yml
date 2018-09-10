@@ -23,6 +23,7 @@
     append: yes
 
 - name: get rubywarden code
+  register: git_updated
   git:
     repo: "https://github.com/jcs/rubywarden.git"
     dest: "{{ rw_src }}"
@@ -46,7 +47,7 @@
   register: migrate
 
 - name: run db:migrate
-  when: migrate.changed
+  when: git_updated.changed or migrate.changed
   command: "env RACK_ENV={{ rw_env }} bundle24 exec rake db:migrate"
   args:
     chdir: "{{ rw_src }}"

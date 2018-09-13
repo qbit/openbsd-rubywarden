@@ -12,7 +12,6 @@ TODO
 ----
 
 - Stop cloning as `root`.
-- Fix `rc`'s `stop` action.
 
 Role Variables
 --------------

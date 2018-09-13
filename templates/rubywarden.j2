@@ -9,17 +9,14 @@ env="RACK_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin"
 {% else %}
 env="RACK_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin"
 {% endif %}
-daemon="/usr/local/bin/bundle24 exec rackup -p {{ rw_port }} config.ru"
+daemon="/usr/local/bin/bundle24"
+daemon_flags="exec rackup -p {{ rw_port }} config.ru"
 daemon_user="{{ rw_user }}"
 
 . /etc/rc.d/rc.subr
 
 rc_start() {
-	${rcexec} "cd ~/src && env ${env} ${daemon}"
-}
-
-rc_stop() {
-	pkill $(pgrep -f "rackup -p {{ rw_port }}")
+	${rcexec} "cd ~/src && env ${env} ${daemon} ${daemon_flags}"
 }
 
 pexp="ruby24 .*rackup -p {{ rw_port }} config.ru"

@@ -5,9 +5,9 @@
 datadir="{{ rw_src }}"
 
 {% if rw_signups == True %}
-env="RACK_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin"
+env="RUBYWARDEN_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin"
 {% else %}
-env="RACK_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin"
+env="RUBYWARDEN_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin"
 {% endif %}
 daemon="/usr/local/bin/bundle24"
 daemon_flags="exec rackup -p {{ rw_port }} config.ru"

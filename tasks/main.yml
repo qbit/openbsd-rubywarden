@@ -48,7 +48,7 @@
 
 - name: run db:migrate
   when: git_updated.changed or migrate.changed
-  command: "env RACK_ENV={{ rw_env }} bundle24 exec rake db:migrate"
+  command: "env RUBYWARDEN_ENV={{ rw_env }} bundle24 exec rake db:migrate"
   args:
     chdir: "{{ rw_src }}"
 

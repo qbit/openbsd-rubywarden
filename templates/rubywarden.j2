@@ -1,13 +1,13 @@
-#!/bin/ksh -x
+#!/bin/ksh
 
 # {{ ansible_managed }}
 
 datadir="{{ rw_src }}"
 
 {% if rw_signups == True %}
-env="RUBYWARDEN_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin"
+env="RUBYWARDEN_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin HOME={{ rw_home }}"
 {% else %}
-env="RUBYWARDEN_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin"
+env="RUBYWARDEN_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin HOME={{ rw_home }}"
 {% endif %}
 daemon="/usr/local/bin/bundle24"
 daemon_flags="exec rackup -p {{ rw_port }} config.ru"
@@ -16,7 +16,7 @@ daemon_user="{{ rw_user }}"
 . /etc/rc.d/rc.subr
 
 rc_start() {
-	${rcexec} "cd ~/src && env ${env} ${daemon} ${daemon_flags}"
+	${rcexec} "cd {{ rw_home }}/src && env ${env} ${daemon} ${daemon_flags}"
 }
 
 pexp="ruby24 .*rackup -p {{ rw_port }} config.ru"

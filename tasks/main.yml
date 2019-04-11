@@ -22,6 +22,11 @@
     group: "{{ rw_group }}"
     append: yes
 
+- name: remove rubywarden .ssh directory
+  file:
+    state: absent
+    path: "{{ rw_home }}/.ssh"
+
 - name: get rubywarden code
   register: git_updated
   git:

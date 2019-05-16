@@ -6,8 +6,19 @@
     state: installed
   loop:
     - git
-    - ruby24-bundler
     - sqlite3
+
+- name: Install Ruby
+  package:
+    name: ruby24-bundler
+    state: installed
+  when: ansible_distribution_version == "6.4"
+
+- name: Install Ruby
+  package:
+    name: ruby25-bundler
+    state: installed
+  when: ansible_distribution_version == "6.5"
 
 - name: add rubywarden group
   group:
@@ -41,6 +52,16 @@
     binstub_directory: "{{ rw_home }}/rb/bin"
     chdir: "{{ rw_src }}"
     state: present
+  when: ansible_distribution_version == "6.4"
+
+- name: run bundler
+  bundler:
+    executable: /usr/local/bin/bundle25
+    gem_path: "{{ rw_home }}/rb"
+    binstub_directory: "{{ rw_home }}/rb/bin"
+    chdir: "{{ rw_src }}"
+    state: present
+  when: ansible_distribution_version == "6.5"
 
 - name: make the {{ rw_env }} db dir
   file:
@@ -52,8 +73,14 @@
   register: migrate
 
 - name: run db:migrate
-  when: git_updated.changed or migrate.changed
+  when: (git_updated.changed or migrate.changed) and (ansible_distribution_version == "6.4")
   command: "env RUBYWARDEN_ENV={{ rw_env }} bundle24 exec rake db:migrate"
+  args:
+    chdir: "{{ rw_src }}"
+
+- name: run db:migrate
+  when: (git_updated.changed or migrate.changed) and (ansible_distribution_version == "6.5")
+  command: "env RUBYWARDEN_ENV={{ rw_env }} bundle25 exec rake db:migrate"
   args:
     chdir: "{{ rw_src }}"
 

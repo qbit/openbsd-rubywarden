@@ -19,6 +19,7 @@ Role Variables
 
 | Variable | Default | Description |
 |--------- | ------- | ----------- |
+| rw_ruby | `2.6` | Ruby version. |
 | rw_port  | `4567`  | The port rubywarden should listen on. |
 | rw_user  | `_rubywarden` | The user that will be added to the system in order to run rubywarden. |
 | rw_home  | `/var/rubywarden` | Home directory for rw_user. |

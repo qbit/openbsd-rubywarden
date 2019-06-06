@@ -9,7 +9,7 @@ env="RUBYWARDEN_ENV={{ rw_env }} ALLOW_SIGNUPS=1 PATH=$PATH:{{ rw_home }}/rb/bin
 {% else %}
 env="RUBYWARDEN_ENV={{ rw_env }} PATH=$PATH:{{ rw_home }}/rb/bin HOME={{ rw_home }}"
 {% endif %}
-daemon="/usr/local/bin/bundle24"
+daemon="/usr/local/bin/bundle{{ rw_ruby_slug }}"
 daemon_flags="exec rackup -p {{ rw_port }} config.ru"
 daemon_user="{{ rw_user }}"
 
@@ -19,7 +19,7 @@ rc_start() {
 	${rcexec} "cd {{ rw_home }}/src && env ${env} ${daemon} ${daemon_flags}"
 }
 
-pexp="ruby24 .*rackup -p {{ rw_port }} config.ru"
+pexp="ruby{{ rw_ruby_slug }} .*rackup -p {{ rw_port }} config.ru"
 
 rc_reload=NO
 rc_bg=YES

@@ -1,6 +1,7 @@
 ---
 # defaults file for openbsd-rubywarden
 
+rw_ruby: 2.6
 rw_port: 4567
 rw_user: _rubywarden
 rw_group: _rubywarden
@@ -9,3 +10,5 @@ rw_commit: master
 rw_env: production
 rw_home: /var/rubywarden
 rw_src: "{{ rw_home }}/src"
+
+rw_ruby_slug: "{{ rw_ruby | regex_replace('\\.', '') }}"

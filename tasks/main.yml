@@ -6,7 +6,7 @@
     state: installed
   loop:
     - git
-    - ruby24-bundler
+    - ruby{{ rw_ruby_slug }}-bundler
     - sqlite3
 
 - name: add rubywarden group
@@ -36,7 +36,7 @@
 
 - name: run bundler
   bundler:
-    executable: /usr/local/bin/bundle24
+    executable: /usr/local/bin/bundle{{ rw_ruby_slug }}
     gem_path: "{{ rw_home }}/rb"
     binstub_directory: "{{ rw_home }}/rb/bin"
     chdir: "{{ rw_src }}"
@@ -53,7 +53,7 @@
 
 - name: run db:migrate
   when: git_updated.changed or migrate.changed
-  command: "env RUBYWARDEN_ENV={{ rw_env }} bundle24 exec rake db:migrate"
+  command: "env RUBYWARDEN_ENV={{ rw_env }} bundle{{ rw_ruby_slug }} exec rake db:migrate"
   args:
     chdir: "{{ rw_src }}"
 

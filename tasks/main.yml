@@ -72,7 +72,7 @@
     dest: /etc/rc.d/rubywarden
     owner: root
     group: wheel
-    mode: 755
+    mode: 0755
 
 - name: enable rubywarden on boot
   register: started
@@ -82,7 +82,7 @@
     enabled: True
 
 - name: restart rubywarden
-  when: git_updated.changed or (rc_status.changed and started.changed == False)
+  when: git_updated.changed or (rc_status.changed and not started.changed)
   service:
     name: rubywarden
     state: restarted

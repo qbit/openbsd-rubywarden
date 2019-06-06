@@ -11,7 +11,6 @@ Requirements
 TODO
 ----
 
-- Figure out why the rc script doesn't work on boot.
 - Stop cloning as `root`.
 
 Role Variables

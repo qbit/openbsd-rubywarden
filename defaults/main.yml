@@ -10,5 +10,6 @@ rw_commit: master
 rw_env: production
 rw_home: /var/rubywarden
 rw_src: "{{ rw_home }}/src"
+rw_keepass: False
 
 rw_ruby_slug: "{{ rw_ruby | regex_replace('\\.', '') }}"

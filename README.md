@@ -27,6 +27,24 @@ Role Variables
 | rw_commit | `master` | Specific commit to be used during the checkout process. |
 | rw_env | `production` | Specify if we are running in production or development mode. |
 | rw_src | `"{{ rw_home }}/src"` | Dir to clone the rubywarden source to. |
+| rw_keepass | `false` | Install gems needed for importing keepass version 1 databases (version 2 is not supported)|
+
+Running rubywarden tool scripts
+-------------------------------
+
+The rubywarden scripts are installed in `/var/rubywarden/src/tools/`.
+
+To run the scripts you need to set the proper environment so that the ruby gems installed into the local directory work correctly.
+
+For example, to import a version 1 keepass database:
+
+```
+RUBYWARDEN_ENV=production \
+	PATH=/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/var/rubywarden/rb/bin \
+	HOME=/var/rubywarden \
+	GEM_HOME=/var/rubywarden/rb/ruby/2.6 \
+	ruby26 tools/keepass_import.rb -f /path/to/keepass.kbdx -u <bw-user>@domain.tld
+```
 
 Example Playbook
 ----------------

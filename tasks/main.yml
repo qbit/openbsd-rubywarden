@@ -40,6 +40,7 @@
     gem_path: "{{ rw_home }}/rb"
     binstub_directory: "{{ rw_home }}/rb/bin"
     chdir: "{{ rw_src }}"
+    extra_args: "{% if rw_keepass %}--with keepass{% endif %}"
     state: present
 
 - name: make the {{ rw_env }} db dir

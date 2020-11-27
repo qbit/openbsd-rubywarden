@@ -18,7 +18,7 @@ Role Variables
 
 | Variable | Default | Description |
 |--------- | ------- | ----------- |
-| rw_ruby | `2.6` | Ruby version. |
+| rw_ruby | `2.7` | Ruby version. |
 | rw_port  | `4567`  | The port rubywarden should listen on. |
 | rw_user  | `_rubywarden` | The user that will be added to the system in order to run rubywarden. |
 | rw_home  | `/var/rubywarden` | Home directory for rw_user. |
@@ -42,8 +42,8 @@ For example, to import a version 1 keepass database:
 RUBYWARDEN_ENV=production \
 	PATH=/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/var/rubywarden/rb/bin \
 	HOME=/var/rubywarden \
-	GEM_HOME=/var/rubywarden/rb/ruby/2.6 \
-	ruby26 tools/keepass_import.rb -f /path/to/keepass.kbdx -u <bw-user>@domain.tld
+	GEM_HOME=/var/rubywarden/rb/ruby/2.7 \
+	ruby27 tools/keepass_import.rb -f /path/to/keepass.kbdx -u <bw-user>@domain.tld
 ```
 
 Example Playbook
@@ -52,6 +52,11 @@ Example Playbook
     - hosts: rw_server
       roles:
          - { role: qbit.rubywarden }
+
+Upgrading from ruby-2.6 to ruby-2.7
+-----------------------------------
+
+Just run the updated role. It automatically upgrades and installs needed packages.
 
 License
 -------
